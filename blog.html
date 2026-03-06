@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luphy Blog — Insights on CRM, AI & Revenue Operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep:   #071E2C;
+      --dark:   #0D3D58;
+      --mid:    #144F6C;
+      --accent: #1B6A8A;
+      --sky:    #4A9FBF;
+      --blue:   #5BBEE8;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--deep);
+      color: #fff;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, h5 { font-family: 'Sora', sans-serif; }
+
+    /* ── NAV (same as index) ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 56px;
+      transition: background 0.35s, padding 0.3s, border-color 0.35s;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(7,30,44,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 14px 56px;
+      border-bottom-color: rgba(74,159,191,0.12);
+    }
+    .nav-logo { height: 38px; filter: drop-shadow(0 0 10px rgba(91,190,232,0.35)); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a.active { color: var(--blue); }
+    .btn-nav {
+      display: inline-block; padding: 10px 22px; border-radius: 7px;
+      background: var(--blue); color: var(--deep); font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 13.5px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(91,190,232,0.28);
+    }
+    .btn-nav:hover { background: #7ECFEE; transform: translateY(-1px); box-shadow: 0 7px 24px rgba(91,190,232,0.38); }
+    .lang-toggle {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); font-family: 'Sora', sans-serif;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em;
+      padding: 6px 13px; border-radius: 6px; cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .lang-toggle:hover { background: rgba(74,159,191,0.15); border-color: rgba(74,159,191,0.4); color: #fff; }
+
+    /* ── BLOG HERO ── */
+    .blog-hero {
+      min-height: 44vh; display: flex; align-items: flex-end;
+      padding: 120px 56px 60px; position: relative; overflow: hidden;
+    }
+    .blog-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(27,106,138,0.32) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 80% 70%, rgba(13,61,88,0.5) 0%, transparent 55%),
+        linear-gradient(180deg, #071E2C 0%, #0C3350 60%, #071E2C 100%);
+    }
+    .blog-hero-grain {
+      position: absolute; inset: 0; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    .wave-deco {
+      position: absolute; opacity: 0.07; pointer-events: none;
+    }
+    .blog-hero-content { position: relative; max-width: 1200px; margin: 0 auto; width: 100%; }
+    .blog-hero-label {
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 14px;
+    }
+    .blog-hero h1 {
+      font-size: clamp(40px, 5.5vw, 68px); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.06; margin-bottom: 16px;
+    }
+    .blog-hero h1 em { color: var(--blue); font-style: normal; }
+    .blog-hero p {
+      font-size: 17px; color: rgba(255,255,255,0.58); line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* ── FILTER TABS ── */
+    .filters-bar {
+      background: rgba(7,30,44,0.8); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); position: sticky; top: 60px; z-index: 100;
+      border-bottom: 1px solid rgba(74,159,191,0.12); padding: 0 56px;
+    }
+    .filters {
+      max-width: 1200px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      padding: 16px 22px; font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.5);
+      background: none; border: none; cursor: pointer; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .filter-btn:hover { color: rgba(255,255,255,0.85); }
+    .filter-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 1200px; margin: 0 auto; }
+    .blog-body { padding: 64px 56px 96px; }
+
+    /* ── FEATURED ARTICLE ── */
+    .featured {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: center; margin-bottom: 72px; padding-bottom: 72px;
+      border-bottom: 1px solid rgba(74,159,191,0.1);
+    }
+    .featured-img {
+      border-radius: 16px; overflow: hidden; position: relative;
+      background: linear-gradient(145deg, rgba(20,79,108,0.7), rgba(10,40,60,0.9));
+      border: 1px solid rgba(74,159,191,0.2);
+      aspect-ratio: 16/10;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .featured-img-inner {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(27,106,138,0.5) 0%, rgba(7,30,44,0.8) 100%),
+        radial-gradient(ellipse at 30% 40%, rgba(91,190,232,0.2) 0%, transparent 60%);
+    }
+    .featured-img-icon {
+      position: relative; font-size: 80px; opacity: 0.25;
+    }
+    .featured-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--blue); color: var(--deep);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
+      font-family: 'Sora', sans-serif;
+    }
+    .featured-content { display: flex; flex-direction: column; gap: 16px; }
+    .article-cat {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--sky);
+    }
+    .article-cat::before {
+      content: ''; display: block; width: 16px; height: 1.5px; background: var(--sky); border-radius: 1px;
+    }
+    .featured-content h2 {
+      font-size: clamp(24px, 2.6vw, 34px); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.2; color: #fff;
+    }
+    .featured-content p {
+      font-size: 15.5px; color: rgba(255,255,255,0.58); line-height: 1.72;
+    }
+    .article-meta {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 12.5px; color: rgba(255,255,255,0.38); display: flex; align-items: center; gap: 5px;
+    }
+    .read-link {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 4px;
+      font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--blue); text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .read-link:hover { gap: 12px; }
+
+    /* ── GRID ── */
+    .grid-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .grid-header h3 {
+      font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .articles-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .article-card {
+      background: linear-gradient(145deg, rgba(20,79,108,0.38), rgba(10,40,60,0.55));
+      border: 1px solid rgba(74,159,191,0.14); border-radius: 16px;
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      text-decoration: none; color: inherit;
+    }
+    .article-card:hover { transform: translateY(-5px); border-color: rgba(91,190,232,0.35); box-shadow: 0 20px 56px rgba(7,30,44,0.5); }
+
+    .card-thumb {
+      height: 180px; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-thumb-bg {
+      position: absolute; inset: 0;
+    }
+    .card-thumb-icon { position: relative; font-size: 52px; opacity: 0.22; }
+    .card-cat-badge {
+      position: absolute; bottom: 12px; left: 14px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+      font-family: 'Sora', sans-serif; color: #fff;
+      backdrop-filter: blur(8px);
+    }
+    .card-body { padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+    .card-title {
+      font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35;
+      margin-bottom: 10px; color: rgba(255,255,255,0.95);
+    }
+    .card-excerpt {
+      font-size: 13.5px; color: rgba(255,255,255,0.5); line-height: 1.65; flex: 1; margin-bottom: 18px;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(74,159,191,0.1); padding-top: 14px; margin-top: auto;
+    }
+    .card-meta { font-size: 12px; color: rgba(255,255,255,0.32); }
+    .card-read {
+      font-size: 12px; font-weight: 700; color: var(--blue);
+      display: flex; align-items: center; gap: 4px;
+      font-family: 'Sora', sans-serif; text-decoration: none;
+    }
+    .card-read svg { transition: transform 0.2s; }
+    .article-card:hover .card-read svg { transform: translateX(3px); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter-bar {
+      background: linear-gradient(135deg, rgba(20,79,108,0.6), rgba(10,40,60,0.8));
+      border: 1px solid rgba(91,190,232,0.2); border-radius: 20px;
+      padding: 48px; margin-top: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+      position: relative; overflow: hidden;
+    }
+    .nl-glow {
+      position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(91,190,232,0.12), transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .nl-text h3 { font-size: 24px; font-weight: 700; margin-bottom: 8px; position: relative; }
+    .nl-text p { font-size: 14.5px; color: rgba(255,255,255,0.55); position: relative; }
+    .nl-form { display: flex; gap: 10px; flex-wrap: wrap; position: relative; }
+    .nl-input {
+      padding: 13px 18px; background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(74,159,191,0.25); border-radius: 8px;
+      color: #fff; font-size: 14px; font-family: 'Inter', sans-serif;
+      outline: none; width: 280px; transition: border-color 0.2s;
+    }
+    .nl-input::placeholder { color: rgba(255,255,255,0.38); }
+    .nl-input:focus { border-color: var(--blue); }
+    .nl-btn {
+      padding: 13px 24px; background: var(--blue); color: var(--deep);
+      border: none; border-radius: 8px; font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 14px; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nl-btn:hover { background: #7ECFEE; transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 38px 56px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    footer img { height: 26px; filter: invert(1) brightness(10); opacity: 0.5; }
+    footer p { font-size: 12.5px; color: rgba(255,255,255,0.3); }
+
+    /* ── ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.v { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .articles-grid { grid-template-columns: 1fr 1fr; }
+      .featured { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav { padding: 16px 24px; }
+      .nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+      .blog-hero, .blog-body, footer { padding-left: 24px; padding-right: 24px; }
+      .filters-bar { padding: 0 24px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .newsletter-bar { flex-direction: column; }
+      .nl-input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html"><img src="brand-assets/Luphy - White Logo.png" alt="Luphy" class="nav-logo"></a>
+  <ul class="nav-links">
+    <li><a href="index.html#crm" data-i18n="nav.crm">CRM</a></li>
+    <li><a href="index.html#ai-automation" data-i18n="nav.ai">IA Automation</a></li>
+    <li><a href="index.html#outbound" data-i18n="nav.out">Outbound</a></li>
+    <li><a href="index.html#approach" data-i18n="nav.app">Approche</a></li>
+    <li><a href="index.html#contact" data-i18n="nav.cnt">Contact</a></li>
+    <li><a href="blog.html" class="active" data-i18n="nav.blog">Blog</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">EN</button>
+    <a href="https://meetings-eu1.hubspot.com/tgalpin" target="_blank" rel="noopener" class="btn-nav" data-i18n="nav.cta">Réserver un Audit</a>
+  </div>
+</nav>
+
+<!-- BLOG HERO -->
+<section class="blog-hero">
+  <div class="blog-hero-bg"></div>
+  <div class="blog-hero-grain"></div>
+  <svg class="wave-deco" style="bottom:-30px;right:-40px;width:360px;opacity:0.07" viewBox="0 0 440 440" fill="none">
+    <path d="M60 220 Q160 110 260 220 Q360 330 460 220" stroke="rgba(74,159,191,0.8)" stroke-width="2.5" fill="none"/>
+    <path d="M30 265 Q130 155 230 265 Q330 375 430 265" stroke="rgba(74,159,191,0.5)" stroke-width="2" fill="none"/>
+    <path d="M90 175 Q190 65 290 175 Q390 285 490 175" stroke="rgba(74,159,191,0.25)" stroke-width="1.5" fill="none"/>
+  </svg>
+  <div class="blog-hero-content">
+    <div class="blog-hero-label" data-i18n="blog.badge">Luphy Insights</div>
+    <h1 data-i18n="blog.h1">Revenue Operations,<br><em>Décryptée.</em></h1>
+    <p data-i18n="blog.sub">Guides pratiques sur le CRM, l'automatisation IA et l'outbound — écrits par des praticiens, pour des équipes ambitieuses.</p>
+  </div>
+</section>
+
+<!-- FILTER TABS -->
+<div class="filters-bar">
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterArticles('all', this)" data-i18n="blog.f.all">Tous les articles</button>
+    <button class="filter-btn" onclick="filterArticles('crm', this)">CRM</button>
+    <button class="filter-btn" onclick="filterArticles('automation', this)" data-i18n="blog.f.ai">IA Automation</button>
+    <button class="filter-btn" onclick="filterArticles('outbound', this)">Outbound</button>
+    <button class="filter-btn" onclick="filterArticles('strategy', this)" data-i18n="blog.f.strat">Stratégie</button>
+  </div>
+</div>
+
+<!-- BLOG BODY -->
+<div class="blog-body">
+  <div class="container">
+
+    <!-- FEATURED ARTICLE -->
+    <div class="featured reveal" data-cat="strategy">
+      <div class="featured-img">
+        <div class="featured-img-inner"></div>
+        <span class="featured-img-icon">⚙️</span>
+        <span class="featured-badge" data-i18n="blog.featured">À la une</span>
+      </div>
+      <div class="featured-content">
+        <span class="article-cat" data-i18n="blog.cat.strat">Stratégie</span>
+        <h2 data-i18n="blog.feat.title">Le Playbook RevOps : comment les meilleures entreprises multiplient par 3 leurs revenus grâce au CRM, à l'IA et à l'Outbound</h2>
+        <p data-i18n="blog.feat.desc">La plupart des entreprises gèrent leur CRM, leur automatisation et leur outbound comme trois initiatives séparées. Les entreprises qui gagnent les font fonctionner comme un système intégré. Voici le cadre.</p>
+        <div class="article-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span data-i18n="blog.read.12">12 min de lecture</span>
+          </span>
+          <span class="meta-item">Mars 2026</span>
+          <span class="meta-item">Titouan Galpin</span>
+        </div>
+        <a href="blog-post.html" class="read-link" data-i18n="blog.read.link">Lire l'article <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- ARTICLES GRID -->
+    <div class="grid-header">
+      <h3 data-i18n="blog.latest">Derniers articles</h3>
+    </div>
+
+    <div class="articles-grid" id="articlesGrid">
+
+      <!-- Article 1 -->
+      <a href="blog-post.html" class="article-card reveal" data-cat="crm">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(20,79,108,0.9),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">📊</span>
+          <span class="card-cat-badge" style="background:rgba(74,159,191,0.3)">CRM</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">5 Signs Your CRM Is Sabotaging Your Sales Team (Without Anyone Noticing)</h4>
+          <p class="card-excerpt">Scattered data, zero adoption, and deals slipping through the cracks — these aren't just inconveniences. They're symptoms of a broken system that costs you revenue every single day.</p>
+          <div class="card-footer">
+            <span class="card-meta">Feb 2026 · 8 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 2 -->
+      <a href="blog-post.html" class="article-card reveal d1" data-cat="automation">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(30,40,20,0.85),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">⚡</span>
+          <span class="card-cat-badge" style="background:rgba(91,190,232,0.3)">AI Automation</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">n8n vs Make vs Zapier: Which Automation Tool Is Right for Your RevOps Stack?</h4>
+          <p class="card-excerpt">We've built automations on all three platforms for dozens of clients. Here's an honest breakdown of where each tool shines — and where it falls flat for B2B revenue teams.</p>
+          <div class="card-footer">
+            <span class="card-meta">Jan 2026 · 10 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 3 -->
+      <a href="blog-post.html" class="article-card reveal d2" data-cat="outbound">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(10,40,70,0.9),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">🎯</span>
+          <span class="card-cat-badge" style="background:rgba(74,159,191,0.25)">Outbound</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Cold Email in 2026: Why AI Personalization Changes Everything (And How to Do It Right)</h4>
+          <p class="card-excerpt">Generic sequences get ignored. AI-personalized outbound at scale gets replies. Here's the exact workflow we use to hit 40%+ open rates for our clients — without burning their domain.</p>
+          <div class="card-footer">
+            <span class="card-meta">Jan 2026 · 9 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 4 -->
+      <a href="blog-post.html" class="article-card reveal" data-cat="crm">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(20,60,90,0.9),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">🔄</span>
+          <span class="card-cat-badge" style="background:rgba(74,159,191,0.3)">CRM</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">CRM Migration Without the Nightmare: A Step-by-Step Guide to Moving Without Losing Data</h4>
+          <p class="card-excerpt">Migrating your CRM is one of the highest-stakes operations in RevOps. Do it wrong and you lose data, break processes, and kill team adoption. Here's how to do it right.</p>
+          <div class="card-footer">
+            <span class="card-meta">Dec 2025 · 11 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 5 -->
+      <a href="blog-post.html" class="article-card reveal d1" data-cat="automation">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(15,50,35,0.85),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">🤖</span>
+          <span class="card-cat-badge" style="background:rgba(91,190,232,0.3)">AI Automation</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">10 HubSpot Automations That Save Our Clients an Average of 8 Hours Per Week</h4>
+          <p class="card-excerpt">Most teams use less than 20% of what HubSpot can do. These 10 workflows are the highest-ROI automations we implement on every engagement — and most take under an hour to build.</p>
+          <div class="card-footer">
+            <span class="card-meta">Nov 2025 · 7 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 6 -->
+      <a href="blog-post.html" class="article-card reveal d2" data-cat="strategy">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(40,20,60,0.85),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">📈</span>
+          <span class="card-cat-badge" style="background:rgba(74,159,191,0.25)">Strategy</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Why 90% of CRM Implementations Fail After 90 Days — And the 3 Things That Prevent It</h4>
+          <p class="card-excerpt">Tool adoption is a people problem, not a technology problem. After dozens of implementations, we've identified the three failure modes that kill CRMs before they ever get started.</p>
+          <div class="card-footer">
+            <span class="card-meta">Oct 2025 · 9 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 7 -->
+      <a href="blog-post.html" class="article-card reveal" data-cat="outbound">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(10,45,75,0.9),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">📧</span>
+          <span class="card-cat-badge" style="background:rgba(74,159,191,0.25)">Outbound</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Building a Multi-Channel Outbound Machine: From Zero to 50 Meetings a Month</h4>
+          <p class="card-excerpt">Email alone won't cut it anymore. The teams booking the most meetings in 2026 combine email, LinkedIn, and calling in a single coordinated sequence — here's the full playbook.</p>
+          <div class="card-footer">
+            <span class="card-meta">Sep 2025 · 13 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 8 -->
+      <a href="blog-post.html" class="article-card reveal d1" data-cat="crm">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(20,55,85,0.9),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">🗂️</span>
+          <span class="card-cat-badge" style="background:rgba(74,159,191,0.3)">CRM</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Database Segmentation 101: How to Structure Your CRM So Marketing and Sales Actually Agree</h4>
+          <p class="card-excerpt">The #1 source of tension between Sales and Marketing is bad data segmentation. Here's the architecture we use to make both teams happy — and actually use the same CRM.</p>
+          <div class="card-footer">
+            <span class="card-meta">Aug 2025 · 8 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 9 -->
+      <a href="blog-post.html" class="article-card reveal d2" data-cat="automation">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,rgba(10,35,55,0.9),rgba(7,30,44,0.95))"></div>
+          <span class="card-thumb-icon">🔗</span>
+          <span class="card-cat-badge" style="background:rgba(91,190,232,0.3)">AI Automation</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Lead Enrichment at Scale: How We Use AI to Fill CRM Gaps Without Manual Research</h4>
+          <p class="card-excerpt">Manual data entry is the biggest time-killer in any revenue team. Here's how we build AI-powered enrichment pipelines that keep CRM data fresh — automatically.</p>
+          <div class="card-footer">
+            <span class="card-meta">Jul 2025 · 7 min</span>
+            <span class="card-read">Read <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-bar reveal">
+      <div class="nl-glow"></div>
+      <div class="nl-text">
+        <h3 data-i18n="blog.nl.title">Recevez la newsletter Luphy Insights</h3>
+        <p data-i18n="blog.nl.sub">Contenu RevOps pratique — sans superflu. Dans votre boîte mail deux fois par mois.</p>
+      </div>
+      <div class="nl-form">
+        <input type="email" class="nl-input" placeholder="votre@email.com">
+        <button class="nl-btn" data-i18n="blog.nl.btn">S'abonner</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html"><img src="brand-assets/Luphy - White Logo.png" alt="Luphy" style="height:26px;opacity:0.7"></a>
+  <p>© 2026 Luphy SAS</p>
+  <p data-i18n="footer.tag">Revenue Operations Intelligence</p>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); io.unobserve(e.target); } });
+  }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Language toggle
+  let currentLang = 'fr';
+  const enBlog = {
+    'nav.crm':'CRM','nav.ai':'AI Automation','nav.out':'Outbound','nav.app':'Approach','nav.cnt':'Contact','nav.blog':'Blog','nav.cta':'Book a Free Audit',
+    'blog.badge':'Luphy Insights','blog.h1':'Revenue Operations,<br><em>Decoded.</em>','blog.sub':'Practical guides on CRM, AI automation, and outbound — written by practitioners, for ambitious teams.',
+    'blog.f.all':'All Articles','blog.f.ai':'AI Automation','blog.f.strat':'Strategy',
+    'blog.featured':'Featured','blog.cat.strat':'Strategy',
+    'blog.feat.title':'The RevOps Playbook: How Top Companies 3× Their Revenue with CRM, AI & Outbound Working Together',
+    'blog.feat.desc':'Most companies run their CRM, automation, and outbound as three separate initiatives. The companies that win run them as one integrated system. Here\'s the framework.',
+    'blog.read.12':'12 min read','blog.read.link':'Read article <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    'blog.latest':'Latest Articles',
+    'blog.nl.title':'Get the Luphy Insights newsletter','blog.nl.sub':'Practical RevOps content — no fluff. Delivered to your inbox twice a month.','blog.nl.btn':'Subscribe',
+    'footer.tag':'Revenue Operations Intelligence'
+  };
+  const frBlog = {};
+  document.querySelectorAll('[data-i18n]').forEach(el => { frBlog[el.dataset.i18n] = el.innerHTML; });
+
+  function toggleLang() {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    const dict = currentLang === 'en' ? enBlog : frBlog;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (dict[el.dataset.i18n] !== undefined) el.innerHTML = dict[el.dataset.i18n];
+    });
+    document.getElementById('lang-toggle').textContent = currentLang === 'fr' ? 'EN' : 'FR';
+  }
+
+  // Filter
+  function filterArticles(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.article-card, .featured').forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>

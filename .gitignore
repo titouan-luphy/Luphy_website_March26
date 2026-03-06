@@ -1,0 +1,4 @@
+node_modules/
+temporary screenshots/
+*.png
+*.jpg.bak
