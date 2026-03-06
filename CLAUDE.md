@@ -3,6 +3,14 @@
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session
 
+## ⚠️ Deployment Guardrail – Read Before Any Change
+
+- The site is live on GitHub Pages (or similar). All changes stay local until explicitly cleared.
+- Default behavior: Every change is previewed on localhost only. Do NOT push to GitHub unless the user says so.
+- Accepted push triggers (exact phrases): "push to GitHub", "deploy", "ship it", "go live"
+- If unsure, ask. Never assume a push is wanted.
+- If the user says "looks good" or "perfect" — that is NOT a push trigger. Stay local.
+
 ## Reference Images
 - If a reference image is provided: match layout, spacing, typography, and color exactly
 - If no reference image: design from scratch with high craft (see guardrails below)
