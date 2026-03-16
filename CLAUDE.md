@@ -3,8 +3,7 @@
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session
 
-## ⚠️ Deployment Guardrail – Read Before Any Change
-
+## ⚠️ Deployment Guardrails – Read Before Any Change
 - The site is live on GitHub Pages (or similar). All changes stay local until explicitly cleared.
 - Default behavior: Every change is previewed on localhost only. Do NOT push to GitHub unless the user says so.
 - Accepted push triggers (exact phrases): "push to GitHub", "deploy", "ship it", "go live"
