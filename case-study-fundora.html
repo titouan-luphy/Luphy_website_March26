@@ -205,13 +205,13 @@
         </a>
         <div class="dropdown-menu">
           <a href="crm.html"><span class="dm-icon">⬡</span><span class="dm-text"><span class="dm-title">CRM Consulting</span><span class="dm-sub">Architecture & adoption</span></span></a>
-          <a href="ia-automation.html"><span class="dm-icon">⚡</span><span class="dm-text"><span class="dm-title">IA Automation</span><span class="dm-sub">Workflows intelligents</span></span></a>
-          <a href="outbound.html"><span class="dm-icon">🎯</span><span class="dm-text"><span class="dm-title">Outbound</span><span class="dm-sub">Prospection automatisée</span></span></a>
+          <a href="ia-automation.html"><span class="dm-icon">⚡</span><span class="dm-text"><span class="dm-title">IA Automation</span><span class="dm-sub" data-i18n="nav.ia.sub">Workflows intelligents</span></span></a>
+          <a href="outbound.html"><span class="dm-icon">🎯</span><span class="dm-text"><span class="dm-title">Outbound</span><span class="dm-sub" data-i18n="nav.outbound.sub">Prospection automatisée</span></span></a>
         </div>
       </li>
-      <li><a href="cas-clients.html" class="active">Cas clients</a></li>
+      <li><a href="cas-clients.html" class="active" data-i18n="nav.clients">Cas clients</a></li>
       <li><a href="blog.html">Blog</a></li>
-      <li><a href="team.html">L'équipe</a></li>
+      <li><a href="team.html" data-i18n="nav.team">L'équipe</a></li>
     </ul>
   </div>
   <div class="nav-right" style="display:flex;align-items:center;gap:12px">
@@ -222,14 +222,14 @@
 </nav>
 <div class="nav-mobile-panel" id="nav-mobile-panel">
   <a href="crm.html">CRM Consulting</a>
-  <a href="ia-automation.html">IA &amp; Automatisation</a>
-  <a href="outbound.html">Outbound Automatisé</a>
+  <a href="ia-automation.html" data-i18n="mob.ia">IA &amp; Automatisation</a>
+  <a href="outbound.html" data-i18n="mob.outbound">Outbound Automatisé</a>
   <div class="mobile-sep"></div>
-  <a href="cas-clients.html">Cas clients</a>
+  <a href="cas-clients.html" data-i18n="nav.clients">Cas clients</a>
   <a href="blog.html">Blog</a>
-  <a href="team.html">L'équipe</a>
+  <a href="team.html" data-i18n="nav.team">L'équipe</a>
   <div class="mobile-sep"></div>
-  <a href="https://meetings-eu1.hubspot.com/tgalpin" target="_blank" rel="noopener" class="mobile-cta">Échanger avec nous</a>
+  <a href="https://meetings-eu1.hubspot.com/tgalpin" target="_blank" rel="noopener" class="mobile-cta" data-i18n="nav.cta">Échanger avec nous</a>
 </div>
 
 <!-- HERO -->
@@ -498,7 +498,13 @@ initLang({
   'cta.intro':'Book 30 minutes for us to understand your challenges and show you what a well-configured HubSpot concretely changes.',
   'cta.btn1':'Book a slot <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   'cta.btn2':'See more case studies',
-  'footer.copy':'© 2026 Luphy · All rights reserved','footer.legal':'Legal Notice'
+  'footer.copy':'© 2026 Luphy · All rights reserved',    'nav.clients': 'Case Studies',
+    'nav.team': 'Team',
+    'nav.ia.sub': 'Intelligent workflows',
+    'nav.outbound.sub': 'Automated prospecting',
+    'mob.ia': 'AI &amp; Automation',
+    'mob.outbound': 'Automated Outbound',
+'footer.legal':'Legal Notice'
 });
 </script>
 <script>

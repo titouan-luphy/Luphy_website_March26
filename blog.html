@@ -368,17 +368,17 @@
         </a>
         <a href="ia-automation.html">
           <span class="dm-icon">⚡</span>
-          <span class="dm-text"><span class="dm-title">IA Automation</span><span class="dm-sub">Workflows intelligents</span></span>
+          <span class="dm-text"><span class="dm-title">IA Automation</span><span class="dm-sub" data-i18n="nav.ia.sub">Workflows intelligents</span></span>
         </a>
         <a href="outbound.html">
           <span class="dm-icon">🎯</span>
-          <span class="dm-text"><span class="dm-title">Outbound</span><span class="dm-sub">Prospection automatisée</span></span>
+          <span class="dm-text"><span class="dm-title">Outbound</span><span class="dm-sub" data-i18n="nav.outbound.sub">Prospection automatisée</span></span>
         </a>
       </div>
     </li>
-    <li><a href="cas-clients.html">Cas clients</a></li>
+    <li><a href="cas-clients.html" data-i18n="nav.clients">Cas clients</a></li>
     <li><a href="blog.html" class="active">Blog</a></li>
-    <li><a href="team.html">L'équipe</a></li>
+    <li><a href="team.html" data-i18n="nav.team">L'équipe</a></li>
   </ul>
   </div>
   <div class="nav-right" style="display:flex;align-items:center;gap:12px">
@@ -389,14 +389,14 @@
 </nav>
 <div class="nav-mobile-panel" id="nav-mobile-panel">
   <a href="crm.html">CRM Consulting</a>
-  <a href="ia-automation.html">IA &amp; Automatisation</a>
-  <a href="outbound.html">Outbound Automatisé</a>
+  <a href="ia-automation.html" data-i18n="mob.ia">IA &amp; Automatisation</a>
+  <a href="outbound.html" data-i18n="mob.outbound">Outbound Automatisé</a>
   <div class="mobile-sep"></div>
-  <a href="cas-clients.html">Cas clients</a>
+  <a href="cas-clients.html" data-i18n="nav.clients">Cas clients</a>
   <a href="blog.html">Blog</a>
   <a href="team.html">L’équipe</a>
   <div class="mobile-sep"></div>
-  <a href="https://meetings-eu1.hubspot.com/tgalpin" target="_blank" rel="noopener" class="mobile-cta">Échanger avec nous</a>
+  <a href="https://meetings-eu1.hubspot.com/tgalpin" target="_blank" rel="noopener" class="mobile-cta" data-i18n="nav.cta">Échanger avec nous</a>
 </div>
 
 <!-- BLOG HERO -->
@@ -634,7 +634,7 @@
 <!-- FOOTER -->
 <footer>
   <a href="index.html"><img src="brand-assets/Luphy_White_Logo.png" alt="Luphy"></a>
-  <p>© 2026 Luphy · Tous droits réservés</p>
+  <p data-i18n="footer.copy">© 2026 Luphy · Tous droits réservés</p>
   <button class="footer-legal" onclick="document.getElementById('legal-modal')?.classList.toggle('open')" data-i18n="footer.legal">Mentions légales</button>
 </footer>
 
@@ -661,7 +661,15 @@
     'blog.read.12':'12 min read','blog.read.link':'Read article <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     'blog.latest':'Latest Articles',
     'blog.nl.title':'Get the Luphy Insights newsletter','blog.nl.sub':'Practical RevOps content — no fluff. Delivered to your inbox twice a month.','blog.nl.btn':'Subscribe',
-    'footer.tag':'Revenue Operations Intelligence','footer.legal':'Legal Notice'
+    'footer.tag':'Revenue Operations Intelligence',
+    'footer.copy': '© 2026 Luphy · All rights reserved',
+    'nav.clients': 'Case Studies',
+    'nav.team': 'Team',
+    'nav.ia.sub': 'Intelligent workflows',
+    'nav.outbound.sub': 'Automated prospecting',
+    'mob.ia': 'AI &amp; Automation',
+    'mob.outbound': 'Automated Outbound',
+'footer.legal':'Legal Notice'
   });
 
   // Filter
