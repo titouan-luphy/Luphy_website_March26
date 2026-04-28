@@ -2,3 +2,5 @@ node_modules/
 temporary screenshots/
 *.png
 *.jpg.bak
+!blog-assets/**/*.png
+!brand-assets/**/*.png
