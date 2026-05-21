@@ -21,6 +21,9 @@
 - `serve.mjs` lives in the project root. Start it in the background before taking any screenshot
 - If the server is already running, do not start a second instance
 
+## Langage
+- When asked to add content to the website (blog, case study, section), always make sure there is a french AND an english version for the two langage of the website to adapt when clicked on the langage button in the header
+
 ## Screenshot Workflow
 - Puppeteer is installed at `C:/Users/nateh/AppData/Local/Temp/puppeteer-test/`
 - **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
