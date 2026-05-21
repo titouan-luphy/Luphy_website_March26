@@ -4,3 +4,7 @@ temporary screenshots/
 *.jpg.bak
 !blog-assets/**/*.png
 !brand-assets/**/*.png
+!case-study-assets/**/*.png
+!case-study-assets/**/*.jpg
+!case-study-assets/**/*.jpeg
+!brand-assets/Client logos/*.jpg
